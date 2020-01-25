@@ -35,7 +35,6 @@ class Robot
 
   def rotate(times)
     @axis = times%2==0? 0 : 1
-
   end
 end
 
