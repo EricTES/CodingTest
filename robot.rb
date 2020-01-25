@@ -1,8 +1,11 @@
 class Robot
-  attr_accessor :axes,:axis,
+  attr_accessor :axes,:axis, :foward,:backward
   def initialize()
     @axes = Array[0,0]
     @axis = 0
+    @foward = 1
+    @backward = -1
+
   end
 
 
@@ -12,8 +15,10 @@ class Robot
       times = command[1].to_i
 
       case direction
-      when "F","B"
-        traverse(times)
+      when "F"
+        traverse(@foward * times)
+      when "B"
+        traverse(@backward * times)
       when "L"
         rotate(times)
       when "R"
