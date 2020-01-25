@@ -1,10 +1,8 @@
 class Robot
-  attr_accessor :vertical,:horizontal,:is_vertical
-
+  attr_accessor :axes,:axis,
   def initialize()
-    @vertical=0
-    @horizontal=0
-    @is_vertical=true
+    @axes = Array[0,0]
+    @axis = 0
   end
 
 
@@ -29,11 +27,7 @@ class Robot
   end
 
   def traverse(times)
-    if @is_vertical
-      vertical += times
-    else
-      horizontal += times
-    end
+    @axes[@axis] += times
   end
 
   def rotate()
