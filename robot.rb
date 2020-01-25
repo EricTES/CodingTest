@@ -15,9 +15,9 @@ class Robot
 
       case direction
       when "F"
-        traverse()
+        traverse(times)
       when "B"
-        traverse()
+        traverse(times)
       when "L"
         rotate()
       when "R"
@@ -28,8 +28,12 @@ class Robot
     puts @vertical.abs + @horizontal.abs
   end
 
-  def traverse()
-  
+  def traverse(times)
+    if @is_vertical
+      vertical += times
+    else
+      horizontal += times
+    end
   end
 
   def rotate()
