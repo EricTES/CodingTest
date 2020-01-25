@@ -12,14 +12,12 @@ class Robot
       times = command[1].to_i
 
       case direction
-      when "F"
-        traverse(times)
-      when "B"
+      when "F","B"
         traverse(times)
       when "L"
-        rotate()
+        rotate(times)
       when "R"
-        rotate()
+        rotate(times)
       end
     end
 
@@ -30,7 +28,8 @@ class Robot
     @axes[@axis] += times
   end
 
-  def rotate()
+  def rotate(times)
+    @axis = times%2==0? 0 : 1
 
   end
 end
