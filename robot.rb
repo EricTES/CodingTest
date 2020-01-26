@@ -9,6 +9,7 @@ class Robot
   end
 
   def calculatedistance(commands)
+    begin
       for command in commands
         direction = command[0]
         times = command[1].to_i
@@ -22,9 +23,15 @@ class Robot
           rotate("L",times)
         when "R"
           rotate("R",times)
+        else
+          raise 'First character of each command must be F,B,L or R'
         end
       end
+    rescue StandardError => e
+      puts e.message
+    else
       puts @axes[0].abs + @axes[1].abs
+    end
   end
 
   #Set the axes
