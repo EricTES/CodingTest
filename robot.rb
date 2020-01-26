@@ -11,7 +11,7 @@ class Robot
   def calculatedistance(commands)
     begin
       for command in commands
-        direction = command[0]
+        direction = command[0].upcase
         times = command[1].to_i
 
         case direction
