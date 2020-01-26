@@ -14,9 +14,14 @@ class Robot
         direction = command[0].upcase
         times = command[1,command.length()]
 
+        #Raise exception if no distance is specify
+        if times.length() < 1
+          raise "Please specify a distance after a command"
+        end
+
         # Raise exception if times are not integers
         if !times.scan(/\D/).empty?
-          raise "Characters after the first can only be integers"
+          raise "No spaces, symbols or letters are allowed after the first character. Only integers."
         end
         times = times.to_i
 
