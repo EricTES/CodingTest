@@ -14,15 +14,7 @@ class Robot
         direction = command[0].upcase
         times = command[1,command.length()]
 
-        #Raise exception if no distance is specify
-        if times.length() < 1
-          raise "Please specify a distance after a command"
-        end
-
-        # Raise exception if times are not integers
-        if !times.scan(/\D/).empty?
-          raise "No spaces, symbols or letters are allowed after the first character. Only integers."
-        end
+        validate(direction, times)
         times = times.to_i
 
         case direction
@@ -34,8 +26,6 @@ class Robot
             rotate("L",times)
           when "R"
             rotate("R",times)
-          else
-            raise 'First character of each command must be F,B,L or R'
         end
       end
     rescue Exception => e
@@ -62,6 +52,24 @@ class Robot
     @foward = @direction <= 1? 1:-1;
     @backward = @foward == 1? -1: 1;
   end
+
+  def validate(direction,times)
+    #Raise exception if first character is not a letter
+    if !(direction == 'F' || direction == 'B' || direction == 'R' || direction == 'L')
+      raise 'First character of each command must be F,B,L or R'
+    end
+
+    #Raise exception if no distance is specified
+    if times.length() < 1
+      raise "Please specify a distance after each command"
+    end
+
+    # Raise exception if distance specified are not integers
+    if !times.scan(/\D/).empty?
+      raise "No spaces, symbols or letters are allowed after the first character. Only integers."
+    end
+  end
+
 end
 
 
