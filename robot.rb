@@ -12,22 +12,28 @@ class Robot
     begin
       for command in commands
         direction = command[0].upcase
-        times = command[1]
+        times = command[1,command.length()]
+
+        # Raise exception if times are not integers
+        if times.match(/^[[:alpha:][:blank:]]+$/)
+          raise "Characters after the first can only be integers"
+        end
+        times = times.to_i
 
         case direction
-        when "F"
-          traverse(@foward * times)
-        when "B"
-          traverse(@backward * times)
-        when "L"
-          rotate("L",times)
-        when "R"
-          rotate("R",times)
-        else
-          raise 'First character of each command must be F,B,L or R'
+          when "F"
+            traverse(@foward * times)
+          when "B"
+            traverse(@backward * times)
+          when "L"
+            rotate("L",times)
+          when "R"
+            rotate("R",times)
+          else
+            raise 'First character of each command must be F,B,L or R'
         end
       end
-    rescue StandardError => e
+    rescue Exception => e
       puts e.message
     else
       puts @axes[0].abs + @axes[1].abs
@@ -39,19 +45,14 @@ class Robot
     @axes[@axis] += times
   end
 
-  #Set the direction facing
+  #Set the direction
   def rotate(rotation,times)
-
-    # Check to see if characters after the first are integers
-    if times.match(/^[[:alpha:][:blank:]]+$/)
-      raise "Characters after the first can only be integers"
-    end
-
     if rotation == "R"
-      @direction = (@direction + times.to_i)%4;
+      @direction = (@direction + times)%4;
     else
-      @direction = (@direction + (3*times.to_i)) % 4;
+      @direction = (@direction + (3*times)) % 4;
     end
+    #Adjust axis, foward and backward accordingly
     @axis = @direction%2==0? 0:1;
     @foward = @direction <= 1? 1:-1;
     @backward = @foward == 1? -1: 1;
