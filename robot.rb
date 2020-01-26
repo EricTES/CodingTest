@@ -75,5 +75,4 @@ end
 
 puts "Enter a line of commands and distance with ',' to seperate them e.g  F1,R5,B2...."
 command = gets.chomp().split(",")
-#command = Array["F1","R5","B2","L5","B3"]
 Robot.new.calculatedistance(command)
