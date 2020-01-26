@@ -15,7 +15,7 @@ class Robot
         times = command[1,command.length()]
 
         # Raise exception if times are not integers
-        if times.match(/^[[:alpha:][:blank:]]+$/)
+        if !times.scan(/\D/).empty?
           raise "Characters after the first can only be integers"
         end
         times = times.to_i
@@ -60,7 +60,7 @@ class Robot
 end
 
 
-puts "Enter a line of commands with ',' to seperate them e.g  F1,R5,B2...."
+puts "Enter a line of commands and distance with ',' to seperate them e.g  F1,R5,B2...."
 command = gets.chomp().split(",")
 #command = Array["F1","R5","B2","L5","B3"]
 Robot.new.calculatedistance(command)
