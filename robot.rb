@@ -1,11 +1,11 @@
 class Robot
-  attr_accessor :axes,:axis, :foward,:backward
+  attr_accessor :axes,:axis, :foward,:backward,:direction
   def initialize()
     @axes = Array[0,0]
     @axis = 0
     @foward = 1
     @backward = -1
-
+    @direction=0
   end
 
 
@@ -33,8 +33,14 @@ class Robot
     @axes[@axis] += times
   end
 
-  def rotate(times)
+  def rotate(rotation,times)
     @axis = times%2==0? 0 : 1
+
+    if roation == "R" 
+      @direction = (@direction + times)%4;
+    else
+      @direction = (@direction + (3*times)) % 4;
+    end
   end
 end
 
