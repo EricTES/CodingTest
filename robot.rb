@@ -20,13 +20,13 @@ class Robot
       when "B"
         traverse(@backward * times)
       when "L"
-        rotate(times)
+        rotate("L",times)
       when "R"
-        rotate(times)
+        rotate("R",times)
       end
     end
 
-    puts @vertical.abs + @horizontal.abs
+    puts @axes[0].abs + @axes[1].abs
   end
 
   def traverse(times)
@@ -34,13 +34,17 @@ class Robot
   end
 
   def rotate(rotation,times)
-    @axis = times%2==0? 0 : 1
-
-    if roation == "R" 
+    if rotation == "R"
       @direction = (@direction + times)%4;
     else
       @direction = (@direction + (3*times)) % 4;
     end
+
+    @axis = @direction%2==0? 0:1;
+
+    @foward = @direction <= 1? 1:-1;
+    @backward = @foward == 1? -1: 1;
+
   end
 end
 
