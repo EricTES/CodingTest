@@ -12,7 +12,7 @@ class Robot
     begin
       for command in commands
         direction = command[0].upcase
-        times = command[1].to_i
+        times = command[1]
 
         case direction
         when "F"
@@ -41,12 +41,17 @@ class Robot
 
   #Set the direction facing
   def rotate(rotation,times)
-    if rotation == "R"
-      @direction = (@direction + times)%4;
-    else
-      @direction = (@direction + (3*times)) % 4;
+
+    # Check to see if characters after the first are integers
+    if times.match(/^[[:alpha:][:blank:]]+$/)
+      raise "Characters after the first can only be integers"
     end
 
+    if rotation == "R"
+      @direction = (@direction + times.to_i)%4;
+    else
+      @direction = (@direction + (3*times.to_i)) % 4;
+    end
     @axis = @direction%2==0? 0:1;
     @foward = @direction <= 1? 1:-1;
     @backward = @foward == 1? -1: 1;
