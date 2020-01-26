@@ -8,24 +8,25 @@ class Robot
     @direction=0
   end
 
+  #Main method to calculate distance
   def calculatedistance(commands)
     begin
       for command in commands
         direction = command[0].upcase
-        times = command[1,command.length()]
+        distance = command[1,command.length()]
 
-        validate(direction, times)
-        times = times.to_i
+        validate(direction, distance)
+        distance = distance.to_i
 
         case direction
           when "F"
-            traverse(@foward * times)
+            traverse(@foward * distance)
           when "B"
-            traverse(@backward * times)
+            traverse(@backward * distance)
           when "L"
-            rotate("L",times)
+            rotate("L",distance)
           when "R"
-            rotate("R",times)
+            rotate("R",distance)
         end
       end
     rescue Exception => e
@@ -36,16 +37,16 @@ class Robot
   end
 
   #Set the axes
-  def traverse(times)
-    @axes[@axis] += times
+  def traverse(distance)
+    @axes[@axis] += distance
   end
 
   #Set the direction
-  def rotate(rotation,times)
+  def rotate(rotation,distance)
     if rotation == "R"
-      @direction = (@direction + times)%4;
+      @direction = (@direction + distance)%4;
     else
-      @direction = (@direction + (3*times)) % 4;
+      @direction = (@direction + (3*distance)) % 4;
     end
     #Adjust axis, foward and backward accordingly
     @axis = @direction%2==0? 0:1;
@@ -53,19 +54,18 @@ class Robot
     @backward = @foward == 1? -1: 1;
   end
 
-  def validate(direction,times)
+
+  def validate(direction,distance)
     #Raise exception if first character is not a letter
     if !(direction == 'F' || direction == 'B' || direction == 'R' || direction == 'L')
       raise 'First character of each command must be F,B,L or R'
     end
-
     #Raise exception if no distance is specified
-    if times.length() < 1
+    if distance.length() < 1
       raise "Please specify a distance after each command"
     end
-
     # Raise exception if distance specified are not integers
-    if !times.scan(/\D/).empty?
+    if !distance.scan(/\D/).empty?
       raise "No spaces, symbols or letters are allowed after the first character. Only integers."
     end
   end
